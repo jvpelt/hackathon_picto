@@ -2,26 +2,14 @@ import React, {Fragment} from 'react'
 import i18n from 'i18next'
 import {Link, match} from 'react-router-dom'
 import clsx from 'clsx'
-import {
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  SvgIcon,
-  ListItemText,
-  ListItemSecondaryAction,
-  Typography,
-  Divider,
-} from '@material-ui/core'
+import {Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, Typography, Divider} from '@material-ui/core'
+import {AssignmentInd, ChevronLeft, PhotoCamera, FormatListNumbered} from '@material-ui/icons'
 import {useStyles} from 'components/Navigation/SideMenu/styles'
-
-export enum Routes {
-  Clients = '/clients',
-}
+import {Routes} from 'definitions'
 
 interface NavItemProps {
   route: Routes
+  icon: JSX.Element
   text: string
   match: match
 }
@@ -38,29 +26,29 @@ export const SideMenu: React.SFC<Props> = ({isSideMenuOpen, hideSideMenu, match}
   const navItems: NavItemProps[] = [
     {
       route: Routes.Clients,
+      icon: <AssignmentInd />,
       text: i18n.t('sidebar:clients'),
+      match,
+    },
+    {
+      route: Routes.Pictos,
+      icon: <PhotoCamera />,
+      text: i18n.t('sidebar:pictos'),
+      match,
+    },
+    {
+      route: Routes.Planning,
+      icon: <FormatListNumbered />,
+      text: i18n.t('sidebar:planning'),
       match,
     },
   ]
 
-  const renderListItem = ({route, text, match}: NavItemProps): JSX.Element | null => {
-    const iconWrapper = <span></span>
-    // let iconWrapper = (
-    //   <SvgIcon>
-    //     <FontAwesomeIcon icon={icon} />
-    //   </SvgIcon>
-    // )
-    // if (badgeCount) {
-    //   iconWrapper = (
-    //     <Badge badgeContent={badgeCount} color="primary">
-    //       {iconWrapper}
-    //     </Badge>
-    //   )
-    // }
+  const renderListItem = ({route, text, icon, match}: NavItemProps): JSX.Element | null => {
     return (
       <ListItem button component={Link} to={route} selected={match.url.startsWith(route)}>
         <ListItemAvatar>
-          <IconButton className={classes.menuIcon}>{iconWrapper}</IconButton>
+          <IconButton className={classes.menuIcon}>{icon}</IconButton>
         </ListItemAvatar>
         <ListItemText primary={text} />
       </ListItem>
@@ -76,7 +64,7 @@ export const SideMenu: React.SFC<Props> = ({isSideMenuOpen, hideSideMenu, match}
           </ListItemText>
           <ListItemSecondaryAction>
             <IconButton data-testid="side-menu-exp" onClick={(e): void => hideSideMenu()} className={classes.menuIcon}>
-              <SvgIcon>{/* <FontAwesomeIcon icon={faAngleLeft} /> */}</SvgIcon>
+              <ChevronLeft />
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>

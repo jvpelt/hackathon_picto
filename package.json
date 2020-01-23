@@ -54,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-virtualized": "^9.21.7",
     "env-cmd": "^10.0.1",
     "i18next": "^19.0.3",
     "prettier": "^1.19.1",

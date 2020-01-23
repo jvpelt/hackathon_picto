@@ -3,10 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 import {composeWithDevTools} from 'redux-devtools-extension/logOnlyInProduction'
 import {rootReducer, initialStoreState} from 'redux-logic/rootReducer'
 import {rootSaga} from 'redux-logic/rootSaga'
-
-export interface StoreState {
-  durp: string
-}
+import {StoreState} from 'definitions'
 
 export const setupStore = (initialState: StoreState = initialStoreState): Store => {
   const sagaMiddleware = createSagaMiddleware()

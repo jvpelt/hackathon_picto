@@ -1,11 +1,12 @@
-import React, {Suspense, useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import i18n from 'i18next'
 import {Route, Switch, Redirect} from 'react-router-dom'
 import {loginWithNothing} from 'stitch'
 import {useStyles} from 'components/App/styles'
 import {NavigationContainer} from 'components/Navigation'
 import {Loading} from 'components/shared/Loading'
-import {Routes} from 'components/Navigation/SideMenu'
+import {Routes} from 'definitions'
+import {Clients} from 'components/Clients'
 
 export const App = (): JSX.Element => {
   const classes = useStyles()
@@ -29,20 +30,18 @@ export const App = (): JSX.Element => {
     return <Loading message={i18n.t('app:loading')} />
   }
 
-  // Lazy loading --> create chunks as nobody needs the whole application
-
   return (
     <div data-testid="main-app" className={classes.root}>
       <Route path="*" render={(routeProps): JSX.Element => <NavigationContainer {...routeProps} />} />
       <div className={classes.content}>
-        <Suspense fallback={<Loading message={i18n.t('generic:loadingComponent')} />}>
-          <Switch>
-            <Route path={`${Routes.Clients}/:clientId?`} component={(): JSX.Element => <div>Client</div>} />
-            <Route>
-              <Redirect to={Routes.Clients} />
-            </Route>
-          </Switch>
-        </Suspense>
+        <Switch>
+          <Route path={`${Routes.Clients}/:clientId?`} component={Clients} />
+          <Route path={`${Routes.Pictos}/:clientId?`} component={(): JSX.Element => <div>Pictos</div>} />
+          <Route path={`${Routes.Planning}/:clientId?`} component={(): JSX.Element => <div>Planning</div>} />
+          <Route>
+            <Redirect to={Routes.Clients} />
+          </Route>
+        </Switch>
       </div>
     </div>
   )
