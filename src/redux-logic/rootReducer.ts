@@ -1,19 +1,13 @@
 import {combineReducers} from 'redux'
-import {StoreState} from 'redux-logic'
+import {StoreState} from 'definitions'
+import {initialState as initialClientState, clientsReducer} from 'redux-logic/clients'
 
 export const initialStoreState: StoreState = {
-  durp: 'burp',
-}
-
-const durpReducer = (state = 'durp', action: {type: string}): string => {
-  switch (action.type) {
-    default:
-      return state
-  }
+  clientState: initialClientState,
 }
 
 const appReducer = combineReducers<StoreState>({
-  durp: durpReducer,
+  clientState: clientsReducer,
 })
 
 export const rootReducer = (state: StoreState | undefined, action: {type: string}): StoreState => {

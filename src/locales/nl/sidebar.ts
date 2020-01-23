@@ -1,4 +1,6 @@
 export const sidebar = {
   title: 'Menu',
-  map: 'Maps',
+  clients: 'Clienten',
+  pictos: 'Picogrammen',
+  planning: 'Planning',
 }
