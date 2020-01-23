@@ -9,7 +9,7 @@ import {MuiThemeProvider, CssBaseline} from '@material-ui/core'
 import {blue} from '@material-ui/core/colors'
 import {setupStore} from 'redux-logic'
 import {ErrorBoundary} from 'components/ErrorBoundary'
-import {App} from 'components/App'
+import {ClientApp} from 'components/ClientApp'
 import {history} from 'utils'
 
 export const init = async (): Promise<void> => {
@@ -48,7 +48,7 @@ export const init = async (): Promise<void> => {
         <MuiThemeProvider theme={theme}>
           <Router history={history}>
             <CssBaseline />
-            <App />
+            <ClientApp />
           </Router>
         </MuiThemeProvider>
       </ErrorBoundary>
