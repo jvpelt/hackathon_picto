@@ -84,8 +84,8 @@ export const ClientListSelection: React.SFC<Props> = ({isLoading, clients, selec
           variant="outlined"
           color="primary"
           onClick={(): void => {
-            alert('todo impl create client')
-            // dispatch(createClient())
+            //alert('todo impl create client')
+            dispatch(createClient())
           }}
         >
           {i18n.t('clients:createClient')}

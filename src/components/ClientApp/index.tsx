@@ -5,7 +5,7 @@ import {loginWithNothing} from 'stitch'
 import {useStyles} from 'components/App/styles'
 import {NavigationContainer} from 'components/Navigation'
 import {Loading} from 'components/shared/Loading'
-import {Routes} from 'components/Navigation/SideMenu'
+import {Routes} from 'definitions'
 import SpacingGrid from 'components/Grid'
 
 export const ClientApp = (): JSX.Element => {
@@ -46,7 +46,7 @@ export const ClientApp = (): JSX.Element => {
         </Suspense>
       </div>
       <div>
-        <SpacingGrid/>
+        <SpacingGrid />
       </div>
     </div>
   )

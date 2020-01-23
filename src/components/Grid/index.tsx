@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export default function SpacingGrid(): JSX.Element {
-  const [spacing, setSpacing] = React.useState<GridSpacing>(2)
+  const [spacing] = React.useState<GridSpacing>(2)
   //const spacing = 2
   const classes = useStyles()
 

@@ -13,3 +13,16 @@ export const fetchClientsSuccess = (payload: Client[]): actions.FetchClientsSucc
 export const fetchClientsError = (): actions.FetchClientsErrorAction => ({
   type: ClientsActionTypes.FetchClientsError,
 })
+
+export const createClient = (payload: Client): actions.CreateClientAction => ({
+  type: ClientsActionTypes.CreateClient,
+  payload,
+})
+
+export const createClientSuccess = (): actions.CreateClientSuccessAction => ({
+  type: ClientsActionTypes.CreateClientSuccess,
+})
+
+export const createClientError = (): actions.CreateClientErrorAction => ({
+  type: ClientsActionTypes.CreateClientError,
+})

@@ -20,6 +20,19 @@ function* fetchClients(): any {
   }
 }
 
+function* createClient(): any {
+  while (true) {
+    yield take(ClientsActionTypes.CreateClient)
+    try {
+      const clients: Client[] = yield call(getClients)
+      yield put(actions.fetchClientsSuccess(clients))
+    } catch (err) {
+      yield put(actions.fetchClientsError())
+      //   yield put(errorNotification(i18n.t('registrations:registration:fetchError')))
+    }
+  }
+}
+
 export const clientsSaga = function* rootSaga() {
   yield all([fetchClients].map(saga => fork(saga)))
 }
