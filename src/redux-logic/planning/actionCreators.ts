@@ -1,5 +1,5 @@
 import * as actions from 'definitions/planning/actions'
-import {TimeSlot, PlanningActionTypes, FetchTimeSlotsParam} from 'definitions'
+import {TimeSlot, PlanningActionTypes, FetchTimeSlotsParam, AssignPictoParam} from 'definitions'
 
 export const fetchTimeSlots = (payload: FetchTimeSlotsParam): actions.FetchTimeslotsAction => ({
   type: PlanningActionTypes.FetchTimeslots,
@@ -27,4 +27,18 @@ export const saveTimeSlotSuccess = (payload: TimeSlot): actions.SaveTimeslotSucc
 
 export const saveTimeSlotError = (): actions.SaveTimeslotErrorAction => ({
   type: PlanningActionTypes.SaveTimeslotError,
+})
+
+export const assignPicto = (payload: AssignPictoParam): actions.AssignPictoAction => ({
+  type: PlanningActionTypes.AssignPicto,
+  payload,
+})
+
+export const assignPictoSuccess = (payload: TimeSlot): actions.AssignPictoSuccessAction => ({
+  type: PlanningActionTypes.AssignPictoSuccess,
+  payload,
+})
+
+export const assignPictoError = (): actions.AssignPictoErrorAction => ({
+  type: PlanningActionTypes.AssignPictoError,
 })

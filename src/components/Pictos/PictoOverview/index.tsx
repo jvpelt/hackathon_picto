@@ -10,7 +10,6 @@ interface Props {
 
 export const PictoOverview: React.SFC<Props> = ({pictos}): JSX.Element => {
   const classes = useStyles()
-  console.log(pictos)
 
   return (
     <Paper className={classes.paper}>

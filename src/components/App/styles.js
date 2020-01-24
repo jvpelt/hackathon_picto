@@ -20,6 +20,7 @@ export const useStyles = makeStyles(theme => ({
     },
     paddingTop: theme.mixins.toolbar.minHeight,
     height: '100%',
+    width: '100%',
     flexGrow: 1,
   },
   loading: {

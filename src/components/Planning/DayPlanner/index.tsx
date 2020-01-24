@@ -5,7 +5,7 @@ import {Paper, IconButton, Tooltip, Typography, Fab, Dialog, DialogTitle, Dialog
 import {useStyles} from 'components/Planning/DayPlanner/styles'
 import {ChevronLeft, ChevronRight, Add} from '@material-ui/icons'
 import {useDispatch, useSelector} from 'react-redux'
-import {StoreState} from 'definitions'
+import {StoreState, TimeSlotCollection} from 'definitions'
 import {fetchTimeSlots, saveTimeSlot} from 'redux-logic/planning'
 import {Loading} from 'components/shared/Loading'
 import {TimeSlots} from 'components/Planning/DayPlanner/TimeSlots'
@@ -13,14 +13,13 @@ import {v4} from 'uuid'
 
 interface Props {
   clientId: string
+  timeslots: TimeSlotCollection
 }
 
-export const DayPlanner: React.SFC<Props> = ({clientId}): JSX.Element => {
+export const DayPlanner: React.SFC<Props> = ({clientId, timeslots}): JSX.Element => {
   const classes = useStyles()
   const dispatch = useDispatch()
   const [selectedDay, setSelectedDay] = useState(new Date(new Date().setHours(0, 0, 0, 0)))
-
-  const timeslots = useSelector(({planningState: {timeslots}}: StoreState) => timeslots)
   const {isLoading, isSaving} = useSelector(({planningState: {timeslotMeta}}: StoreState) => timeslotMeta)
 
   useEffect(() => {

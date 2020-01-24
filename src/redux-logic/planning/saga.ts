@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import {PlanningActionTypes, TimeSlot, FetchTimeslotsAction, SaveTimeslotAction} from 'definitions'
+import {PlanningActionTypes, TimeSlot, FetchTimeslotsAction, SaveTimeslotAction, AssignPictoAction} from 'definitions'
 // import i18n from 'i18next'
 import {all, fork, take, put, call} from 'redux-saga/effects'
-import {getTimeSlots, saveTimeSlot} from 'stitch/timeslots'
+import {getTimeSlots, saveTimeSlot, assignPicto} from 'stitch/timeslots'
 import * as actions from 'redux-logic/planning/actionCreators'
 // import {errorNotification} from 'redux-logic/notification'
 
@@ -33,6 +33,19 @@ function* saveTimeSlotSaga(): any {
   }
 }
 
+function* assignPictoSaga(): any {
+  while (true) {
+    const {payload}: AssignPictoAction = yield take(PlanningActionTypes.AssignPicto)
+    try {
+      const timeslot: TimeSlot = yield call(assignPicto, payload)
+      yield put(actions.assignPictoSuccess(timeslot))
+    } catch (err) {
+      yield put(actions.assignPictoError())
+      //   yield put(errorNotification(i18n.t('registrations:registration:fetchError')))
+    }
+  }
+}
+
 export const planningSaga = function* rootSaga() {
-  yield all([fetchTimeSlots, saveTimeSlotSaga].map(saga => fork(saga)))
+  yield all([fetchTimeSlots, saveTimeSlotSaga, assignPictoSaga].map(saga => fork(saga)))
 }

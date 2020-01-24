@@ -7,6 +7,7 @@ const timeslotReducer = (state = initialTimeSlotState, action: PlanningAction): 
     case PlanningActionTypes.FetchTimeslotsSuccess:
       return action.payload.reduce((obj, current) => ({...obj, [current.id]: current}), initialTimeSlotState)
     case PlanningActionTypes.SaveTimeslotSuccess:
+    case PlanningActionTypes.AssignPictoSuccess:
       return {...state, [action.payload.id]: action.payload}
     default:
       return state

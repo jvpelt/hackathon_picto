@@ -1,4 +1,4 @@
-import {TimeSlot, FetchTimeSlotsParam} from 'definitions'
+import {TimeSlot, FetchTimeSlotsParam, AssignPictoParam} from 'definitions'
 
 export enum PlanningActionTypes {
   SaveTimeslot = 'planning/SAVE_TIMESLOT',
@@ -7,6 +7,9 @@ export enum PlanningActionTypes {
   FetchTimeslots = 'planning/FETCH_TIMESLOTS',
   FetchTimeslotsSuccess = 'planning/FETCH_TIMESLOTS_SUCCESS',
   FetchTimeslotsError = 'planning/FETCH_TIMESLOTS_ERROR',
+  AssignPicto = 'planning/ASSIGN_PICTO',
+  AssignPictoSuccess = 'planning/ASSIGN_PICTO_SUCCESS',
+  AssignPictoError = 'planning/ASSIGN_PICTO_ERROR',
 }
 
 export interface SaveTimeslotAction {
@@ -37,6 +40,20 @@ export interface FetchTimeslotsErrorAction {
   type: PlanningActionTypes.FetchTimeslotsError
 }
 
+export interface AssignPictoAction {
+  type: PlanningActionTypes.AssignPicto
+  payload: AssignPictoParam
+}
+
+export interface AssignPictoSuccessAction {
+  type: PlanningActionTypes.AssignPictoSuccess
+  payload: TimeSlot
+}
+
+export interface AssignPictoErrorAction {
+  type: PlanningActionTypes.AssignPictoError
+}
+
 export type PlanningAction =
   | SaveTimeslotAction
   | SaveTimeslotSuccessAction
@@ -44,3 +61,6 @@ export type PlanningAction =
   | FetchTimeslotsAction
   | FetchTimeslotsSuccessAction
   | FetchTimeslotsErrorAction
+  | AssignPictoAction
+  | AssignPictoSuccessAction
+  | AssignPictoErrorAction

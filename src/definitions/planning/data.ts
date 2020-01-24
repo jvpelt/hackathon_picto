@@ -5,6 +5,12 @@ export interface FetchTimeSlotsParam {
   day: Date
 }
 
+export interface AssignPictoParam {
+  clientId: string
+  pictoId: string
+  timeslotId: string
+}
+
 export interface TimeSlot {
   id: string
   clientId: string
