@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {Fragment, useCallback, useState} from 'react'
 import i18n from 'i18next'
 import clsx from 'clsx'
@@ -32,10 +33,10 @@ export const TopBar = ({isSideMenuOpen, showSideMenu}: TopBarProps): JSX.Element
           <Typography variant="h6" color="inherit" className={classes.title}>
             {i18n.t('topbar:title')}
           </Typography>
-          <Chip variant="outlined" label={process.env.REACT_APP_ENV} size="small" />
+          {/* <Chip variant="outlined" label={process.env.REACT_APP_ENV} size="small" />
           <IconButton edge="end" onClick={handleProfileMenuOpen} color="inherit" data-testid="user-icon">
             <Person />
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
       <Menu

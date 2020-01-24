@@ -7,6 +7,7 @@ import {NavigationContainer} from 'components/Navigation'
 import {Loading} from 'components/shared/Loading'
 import {Routes} from 'definitions'
 import {Clients} from 'components/Clients'
+import {PictoContainer} from 'components/Pictos'
 
 export const App = (): JSX.Element => {
   const classes = useStyles()
@@ -36,8 +37,7 @@ export const App = (): JSX.Element => {
       <div className={classes.content}>
         <Switch>
           <Route path={`${Routes.Clients}/:clientId?`} component={Clients} />
-          <Route path={`${Routes.Pictos}/:clientId?`} component={(): JSX.Element => <div>Pictos</div>} />
-          <Route path={`${Routes.Planning}/:clientId?`} component={(): JSX.Element => <div>Planning</div>} />
+          <Route exact path={`${Routes.Pictos}`} component={PictoContainer} />
           <Route>
             <Redirect to={Routes.Clients} />
           </Route>

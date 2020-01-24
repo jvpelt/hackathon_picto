@@ -3,7 +3,7 @@ import i18n from 'i18next'
 import {Link, match} from 'react-router-dom'
 import clsx from 'clsx'
 import {Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, Typography, Divider} from '@material-ui/core'
-import {AssignmentInd, ChevronLeft, PhotoCamera, FormatListNumbered} from '@material-ui/icons'
+import {AssignmentInd, ChevronLeft, BurstMode} from '@material-ui/icons'
 import {useStyles} from 'components/Navigation/SideMenu/styles'
 import {Routes} from 'definitions'
 
@@ -32,21 +32,15 @@ export const SideMenu: React.SFC<Props> = ({isSideMenuOpen, hideSideMenu, match}
     },
     {
       route: Routes.Pictos,
-      icon: <PhotoCamera />,
+      icon: <BurstMode />,
       text: i18n.t('sidebar:pictos'),
-      match,
-    },
-    {
-      route: Routes.Planning,
-      icon: <FormatListNumbered />,
-      text: i18n.t('sidebar:planning'),
       match,
     },
   ]
 
   const renderListItem = ({route, text, icon, match}: NavItemProps): JSX.Element | null => {
     return (
-      <ListItem button component={Link} to={route} selected={match.url.startsWith(route)}>
+      <ListItem key={route} button component={Link} to={route} selected={match.url.startsWith(route)}>
         <ListItemAvatar>
           <IconButton className={classes.menuIcon}>{icon}</IconButton>
         </ListItemAvatar>
