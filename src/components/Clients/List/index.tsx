@@ -1,14 +1,15 @@
 import React, {useState, useCallback} from 'react'
-import {useDispatch} from 'react-redux'
+//import {useDispatch} from 'react-redux'
 import i18n from 'i18next'
 import {List, ListItem, ListItemText, Paper, Button} from '@material-ui/core'
 import {AutoSizer, List as VirtualizedList, CellMeasurer, CellMeasurerCache} from 'react-virtualized'
 import {ClientListItemComp} from 'components/Clients/List/ClientListItem'
 import {Loading} from 'components/shared/Loading'
 import {useStyles} from 'components/Clients/List/styles'
-import {Client} from 'definitions'
+import {Client, StoreState} from 'definitions'
 //import {createClientDialog} from 'redux-logic/clients'
 import {ClientDialog} from 'components/Clients/List/ClientDialog'
+import {useSelector} from 'react-redux'
 
 interface Props {
   isLoading: boolean
@@ -80,13 +81,18 @@ export const ClientListSelection: React.SFC<Props> = ({isLoading, clients, selec
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
+  const isSaving = useSelector(({clientState: {meta}}: StoreState) => meta.isSaving)
+  if (isSaving) {
+    return <Loading message={i18n.t('clients:saving')} />
+  }
+
   return (
     <Paper className={classes.paper}>
       <ListItem>
         <Button fullWidth variant="outlined" color="primary" onClick={(): void => setOpen(true)}>
           {i18n.t('clients:createClient')}
         </Button>
-        <ClientDialog open={open}></ClientDialog>
+        <ClientDialog open={open} setOpen={setOpen} />
       </ListItem>
       <ClientList clients={clients} isLoading={isLoading} selectedId={selectedId} />
     </Paper>

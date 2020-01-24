@@ -27,7 +27,7 @@ export const Clients: React.SFC<Props> = ({match}): JSX.Element => {
         <ClientListSelection
           clients={Object.keys(clients)
             .map(k => clients[k])
-            .sort((a, b) => a.id.localeCompare(b.id))}
+            .sort((a, b) => a.name.localeCompare(b.name))}
           isLoading={isLoading}
           selectedId={selectedId}
         />

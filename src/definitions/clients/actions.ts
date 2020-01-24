@@ -30,6 +30,7 @@ export interface CreateClientAction {
 
 export interface CreateClientSuccessAction {
   type: ClientsActionTypes.CreateClientSuccess
+  payload: Client
 }
 
 export interface CreateClientErrorAction {

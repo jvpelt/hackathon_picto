@@ -25,7 +25,7 @@ function* createClient(): any {
     const {payload}: CreateClientAction = yield take(ClientsActionTypes.CreateClient)
     try {
       yield call(saveClient, payload)
-      yield put(actions.createClientSuccess())
+      yield put(actions.createClientSuccess(payload))
     } catch (err) {
       yield put(actions.createClientError())
       //   yield put(errorNotification(i18n.t('registrations:registration:fetchError')))

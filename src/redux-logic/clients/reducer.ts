@@ -6,6 +6,8 @@ const clientReducer = (state = initialClientCollectionState, action: ClientsActi
   switch (action.type) {
     case ClientsActionTypes.FetchClientsSuccess:
       return action.payload.reduce((obj, current) => ({...obj, [current.id]: current}), initialClientCollectionState)
+    case ClientsActionTypes.CreateClientSuccess:
+      return {...state, [action.payload.id]: action.payload}
     default:
       return state
   }

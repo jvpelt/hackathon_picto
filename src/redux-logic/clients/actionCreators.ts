@@ -19,8 +19,9 @@ export const createClient = (payload: Client): actions.CreateClientAction => ({
   payload,
 })
 
-export const createClientSuccess = (): actions.CreateClientSuccessAction => ({
+export const createClientSuccess = (payload: Client): actions.CreateClientSuccessAction => ({
   type: ClientsActionTypes.CreateClientSuccess,
+  payload,
 })
 
 export const createClientError = (): actions.CreateClientErrorAction => ({
