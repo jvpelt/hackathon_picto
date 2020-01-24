@@ -5,6 +5,7 @@ import {SplitView} from 'components/shared/SplitView'
 import {ClientListSelection} from 'components/Clients/List'
 import {match} from 'react-router-dom'
 import {StoreState} from 'definitions'
+import {PlanningContainer} from 'components/Planning'
 
 interface Props {
   match: match<{clientId: string | undefined}>
@@ -31,7 +32,7 @@ export const Clients: React.SFC<Props> = ({match}): JSX.Element => {
           selectedId={selectedId}
         />
       }
-      detail={<div>client details</div>}
+      detail={<PlanningContainer clientId={selectedId} />}
     />
   )
 }

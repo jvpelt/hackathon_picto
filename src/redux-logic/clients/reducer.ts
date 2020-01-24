@@ -15,6 +15,7 @@ const initialMetaState: StateMetaData = {
   isLoading: false,
   hasError: false,
   errorText: '',
+  isSaving: false,
 }
 
 const clientMetaReducer = (state: StateMetaData = initialMetaState, action: ClientsAction): StateMetaData => {
