@@ -1,33 +1,35 @@
-import React, {useState, ChangeEvent, Fragment, useCallback} from 'react'
+import React, {useState, Fragment, useCallback} from 'react'
 import i18n from 'i18next'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core'
-import {history} from 'utils'
+// import {history} from 'utils'
 import {Loading} from 'components/shared/Loading'
 import {useDispatch} from 'react-redux'
 import {createClient} from 'redux-logic/clients'
-import {idText} from 'typescript'
+import {Client} from 'definitions'
 
-interface Client {
-  id: string
-  firstName: string
-  lastName: string
+const initStateClient: Client = {id: '', name: ''}
+
+interface ClientCreateState {
+  isSaving: boolean
+  hasError: boolean
 }
+const initStateClientCreateState: ClientCreateState = {isSaving: false, hasError: false}
 
-const initState: Client = {id: '', firstName: '', lastName: ''}
-
-export const Feedback: React.SFC = (): JSX.Element => {
+export const ClientDialog: React.SFC = (): JSX.Element => {
   const dispatch = useDispatch()
-  const [client, setClient] = useState<Client>(initState)
+  const [client, setClient] = useState<Client>(initStateClient)
+  const [clientCreateState, setClientCreateState] = useState<ClientCreateState>(initStateClientCreateState)
 
   const handleSubmit = useCallback((): void => {
-    setClient({...initState, isSaving: true})
-    dispatch(createClient({id: client.id, firstName: client.firstName, lastName: client.lastName}))
-  }, [client.firstName, client.id, client.lastName, dispatch])
+    setClient({...initStateClient})
+    dispatch(createClient({id: client.id, name: client.name}))
+    setClientCreateState({isSaving: true, hasError: clientCreateState.hasError})
+  }, [client.id, client.name, clientCreateState.hasError, dispatch])
 
   const getDialogContent = (): JSX.Element => {
-    if (client.isSaving) {
+    if (clientCreateState.isSaving) {
       return (
         <DialogContent>
           <Loading message={i18n.t('clients:saving')} />
@@ -49,28 +51,13 @@ export const Feedback: React.SFC = (): JSX.Element => {
             margin="dense"
             type="text"
             variant="outlined"
-            error={client.hasError}
+            error={clientCreateState.hasError}
             helperText={i18n.t('clients:required')}
-            value={client.firstName}
-          />
-          <TextField
-            id="lastName"
-            name="lastName"
-            label={i18n.t('clients:lastName')}
-            autoFocus
-            fullWidth
-            multiline
-            rows="1"
-            margin="dense"
-            type="text"
-            variant="outlined"
-            error={client.hasError}
-            helperText={i18n.t('clients:required')}
-            value={client.lastName}
+            value={client.name}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>{i18n.t('clients:cancel')}</Button>
+          {/* <Button onClick={handleClose}>{i18n.t('clients:cancel')}</Button> */}
           <Button onClick={handleSubmit}>{i18n.t('clients:send')}</Button>
         </DialogActions>
       </Fragment>
@@ -79,7 +66,7 @@ export const Feedback: React.SFC = (): JSX.Element => {
 
   return (
     <div data-testid="feedback">
-      <Dialog open={true} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={true} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{i18n.t('feedback:title')}</DialogTitle>
         {getDialogContent()}
       </Dialog>

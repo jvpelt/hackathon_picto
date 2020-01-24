@@ -15,6 +15,7 @@ const initialMetaState: StateMetaData = {
   isLoading: false,
   hasError: false,
   errorText: '',
+  isSaving: false,
 }
 
 const clientMetaReducer = (state: StateMetaData = initialMetaState, action: ClientsAction): StateMetaData => {
@@ -24,6 +25,11 @@ const clientMetaReducer = (state: StateMetaData = initialMetaState, action: Clie
     case ClientsActionTypes.FetchClientsSuccess:
     case ClientsActionTypes.FetchClientsError:
       return {...state, isLoading: false}
+    case ClientsActionTypes.CreateClient:
+      return {...state, isSaving: true}
+    case ClientsActionTypes.CreateClientSuccess:
+    case ClientsActionTypes.CreateClientError:
+      return {...state, isSaving: false}
     default:
       return state
   }

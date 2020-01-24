@@ -26,3 +26,7 @@ export const createClientSuccess = (): actions.CreateClientSuccessAction => ({
 export const createClientError = (): actions.CreateClientErrorAction => ({
   type: ClientsActionTypes.CreateClientError,
 })
+
+export const createClientDialog = (): actions.CreateClientDialog => ({
+  type: ClientsActionTypes.CreateClientDialog,
+})

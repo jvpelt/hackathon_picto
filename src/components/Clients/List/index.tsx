@@ -1,4 +1,5 @@
 import React, {useState, useCallback} from 'react'
+import {useDispatch} from 'react-redux'
 import i18n from 'i18next'
 import {List, ListItem, ListItemText, Paper, Button} from '@material-ui/core'
 import {AutoSizer, List as VirtualizedList, CellMeasurer, CellMeasurerCache} from 'react-virtualized'
@@ -6,6 +7,8 @@ import {ClientListItemComp} from 'components/Clients/List/ClientListItem'
 import {Loading} from 'components/shared/Loading'
 import {useStyles} from 'components/Clients/List/styles'
 import {Client} from 'definitions'
+import {createClientDialog} from 'redux-logic/clients'
+import {ClientDialog} from 'components/Clients/List/ClientDialog'
 
 interface Props {
   isLoading: boolean
@@ -75,6 +78,7 @@ const ClientList: React.SFC<Props> = ({isLoading, clients, selectedId}): JSX.Ele
 
 export const ClientListSelection: React.SFC<Props> = ({isLoading, clients, selectedId}): JSX.Element => {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   return (
     <Paper className={classes.paper}>
@@ -84,13 +88,13 @@ export const ClientListSelection: React.SFC<Props> = ({isLoading, clients, selec
           variant="outlined"
           color="primary"
           onClick={(): void => {
-            //alert('todo impl create client')
-            dispatch(createClient())
+            dispatch(createClientDialog())
           }}
         >
           {i18n.t('clients:createClient')}
         </Button>
       </ListItem>
+      <ClientDialog></ClientDialog>
       <ClientList clients={clients} isLoading={isLoading} selectedId={selectedId} />
     </Paper>
   )

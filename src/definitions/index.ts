@@ -8,6 +8,7 @@ export interface StateMetaData {
   isLoading: boolean
   hasError: boolean
   errorText: string
+  isSaving: boolean
 }
 
 export enum Routes {
