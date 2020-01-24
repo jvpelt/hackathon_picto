@@ -12,20 +12,25 @@ import {Client} from 'definitions'
 const initStateClient: Client = {id: '', name: ''}
 
 interface ClientCreateState {
+  openDialog: boolean
   isSaving: boolean
   hasError: boolean
 }
-const initStateClientCreateState: ClientCreateState = {isSaving: false, hasError: false}
 
-export const ClientDialog: React.SFC = (): JSX.Element => {
+interface Props {
+  open: boolean
+}
+
+export const ClientDialog: React.SFC<Props> = ({open}): JSX.Element => {
+  const initStateClientCreateState: ClientCreateState = {openDialog: open, isSaving: false, hasError: false}
   const dispatch = useDispatch()
-  const [client, setClient] = useState<Client>(initStateClient)
   const [clientCreateState, setClientCreateState] = useState<ClientCreateState>(initStateClientCreateState)
+  const [client, setClient] = useState<Client>(initStateClient)
 
   const handleSubmit = useCallback((): void => {
     setClient({...initStateClient})
     dispatch(createClient({id: client.id, name: client.name}))
-    setClientCreateState({isSaving: true, hasError: clientCreateState.hasError})
+    setClientCreateState({openDialog: false, isSaving: true, hasError: clientCreateState.hasError})
   }, [client.id, client.name, clientCreateState.hasError, dispatch])
 
   const getDialogContent = (): JSX.Element => {
@@ -66,7 +71,7 @@ export const ClientDialog: React.SFC = (): JSX.Element => {
 
   return (
     <div data-testid="feedback">
-      <Dialog open={true} aria-labelledby="form-dialog-title">
+      <Dialog open={clientCreateState.openDialog} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{i18n.t('feedback:title')}</DialogTitle>
         {getDialogContent()}
       </Dialog>

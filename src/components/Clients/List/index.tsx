@@ -7,7 +7,7 @@ import {ClientListItemComp} from 'components/Clients/List/ClientListItem'
 import {Loading} from 'components/shared/Loading'
 import {useStyles} from 'components/Clients/List/styles'
 import {Client} from 'definitions'
-import {createClientDialog} from 'redux-logic/clients'
+//import {createClientDialog} from 'redux-logic/clients'
 import {ClientDialog} from 'components/Clients/List/ClientDialog'
 
 interface Props {
@@ -78,23 +78,16 @@ const ClientList: React.SFC<Props> = ({isLoading, clients, selectedId}): JSX.Ele
 
 export const ClientListSelection: React.SFC<Props> = ({isLoading, clients, selectedId}): JSX.Element => {
   const classes = useStyles()
-  const dispatch = useDispatch()
+  const [open, setOpen] = useState(false)
 
   return (
     <Paper className={classes.paper}>
       <ListItem>
-        <Button
-          fullWidth
-          variant="outlined"
-          color="primary"
-          onClick={(): void => {
-            dispatch(createClientDialog())
-          }}
-        >
+        <Button fullWidth variant="outlined" color="primary" onClick={(): void => setOpen(true)}>
           {i18n.t('clients:createClient')}
         </Button>
+        <ClientDialog open={open}></ClientDialog>
       </ListItem>
-      <ClientDialog></ClientDialog>
       <ClientList clients={clients} isLoading={isLoading} selectedId={selectedId} />
     </Paper>
   )
