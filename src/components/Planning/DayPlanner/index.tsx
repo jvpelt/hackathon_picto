@@ -72,8 +72,8 @@ interface AddSlotProps {
 const AddTimeSlot: React.SFC<AddSlotProps> = ({clientId, day}): JSX.Element => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const [open, setOpen] = React.useState(false)
-  const [timeSlot, setTimeSlot] = React.useState('')
+  const [open, setOpen] = useState(false)
+  const [timeSlot, setTimeSlot] = useState('')
 
   const handleOnOpen = (): void => setOpen(true)
   const handleClose = (): void => setOpen(false)

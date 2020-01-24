@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, {useState, Fragment} from 'react'
 import i18n from 'i18next'
 import {GridList, GridListTile, GridListTileBar, IconButton, Menu, MenuItem, ListItemText} from '@material-ui/core'
@@ -18,11 +20,12 @@ interface Props {
 export const PictoList: React.SFC<Props> = ({pictos, timeslots, clientId}): JSX.Element => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
-  const dispatch = useDispatch()
+  const [selectedPictoId, setSelectedPictoId] = useState('')
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleMenuOpen = (event: {currentTarget: any}): void => setAnchorEl(event.currentTarget)
-  const handleMenuClose = (): void => setAnchorEl(null)
+  const handleMenuClose = (): void => {
+    setAnchorEl(null)
+    setSelectedPictoId('')
+  }
 
   return (
     <div className={classes.root}>
@@ -41,7 +44,12 @@ export const PictoList: React.SFC<Props> = ({pictos, timeslots, clientId}): JSX.
               //     </span>
               //   }
               actionIcon={
-                <IconButton onClick={handleMenuOpen}>
+                <IconButton
+                  onClick={(event: {currentTarget: any}): void => {
+                    setAnchorEl(event.currentTarget)
+                    setSelectedPictoId(picto.id)
+                  }}
+                >
                   <Add className={classes.title} />
                 </IconButton>
               }
@@ -50,33 +58,7 @@ export const PictoList: React.SFC<Props> = ({pictos, timeslots, clientId}): JSX.
                 title: classes.title,
               }}
             />
-            <Menu
-              anchorEl={anchorEl}
-              anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-              // keepMounted
-              transformOrigin={{vertical: 'top', horizontal: 'right'}}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-              MenuListProps={{disablePadding: true}}
-            >
-              {timeslots.length > 0 ? (
-                timeslots.map(timeslot => (
-                  <MenuItem
-                    key={timeslot.id}
-                    divider
-                    onClick={(): void => {
-                      dispatch(assignPicto({pictoId: picto.id, clientId, timeslotId: timeslot.id}))
-                    }}
-                  >
-                    {timeslot.timeSlot}
-                  </MenuItem>
-                ))
-              ) : (
-                <MenuItem button={false} divider>
-                  {i18n.t('planning:timeslot:notAvailable')}
-                </MenuItem>
-              )}
-            </Menu>
+            <TimeSlotMenu pictoId={selectedPictoId} timeslots={timeslots} anchorEl={anchorEl} handleMenuClose={handleMenuClose} clientId={clientId} />
           </GridListTile>
         ))}
       </GridList>
@@ -84,40 +66,46 @@ export const PictoList: React.SFC<Props> = ({pictos, timeslots, clientId}): JSX.
   )
 }
 
-interface PictoItemProps {
-  picto: PictoData
+interface TimeSlotMenuProps {
+  pictoId: string
   timeslots: TimeSlot[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  anchorEl: any
+  handleMenuClose: () => void
+  clientId: string
 }
 
-const PictoItem: React.SFC<PictoItemProps> = ({picto, timeslots}): JSX.Element => {
+const TimeSlotMenu: React.SFC<TimeSlotMenuProps> = ({pictoId, timeslots, anchorEl, handleMenuClose, clientId}): JSX.Element => {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = useState(null)
+  const dispatch = useDispatch()
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleMenuOpen = (event: {currentTarget: any}): void => setAnchorEl(event.currentTarget)
   return (
-    <GridListTile>
-      <img src={picto.data} alt={picto.title} />
-      <GridListTileBar
-        title={picto.title}
-        titlePosition="top"
-        //   title={
-        //     <span>
-        //       {tile.tags.map((tag, index) => (
-        //         <Chip key={index} label={i18n.t(`pictos:tag:${tag}`)} size="small" className={classes.tagChip} />
-        //       ))}
-        //     </span>
-        //   }
-        actionIcon={
-          <IconButton onClick={handleMenuOpen}>
-            <Add className={classes.title} />
-          </IconButton>
-        }
-        classes={{
-          root: classes.titleBar,
-          title: classes.title,
-        }}
-      />
-    </GridListTile>
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+      // keepMounted
+      transformOrigin={{vertical: 'top', horizontal: 'right'}}
+      open={Boolean(anchorEl)}
+      onClose={handleMenuClose}
+      MenuListProps={{disablePadding: true}}
+    >
+      {timeslots.length > 0 ? (
+        timeslots.map(timeslot => (
+          <MenuItem
+            key={timeslot.id}
+            divider
+            onClick={(): void => {
+              dispatch(assignPicto({pictoId, clientId, timeslotId: timeslot.id}))
+            }}
+          >
+            {timeslot.timeSlot}
+          </MenuItem>
+        ))
+      ) : (
+        <MenuItem button={false} divider>
+          {i18n.t('planning:timeslot:notAvailable')}
+        </MenuItem>
+      )}
+    </Menu>
   )
 }
