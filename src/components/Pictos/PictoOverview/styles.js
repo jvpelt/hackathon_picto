@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core'
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   paper: {
     height: '80%',
     display: 'flex',
@@ -11,4 +11,15 @@ export const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
   },
-})
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    width: '100%',
+    height: '80%',
+  },
+}))

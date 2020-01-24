@@ -1,44 +1,34 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import i18n from 'i18next'
-import {StoreState, PictoCollection} from 'definitions'
-import {useSelector, useDispatch} from 'react-redux'
-import {Loading} from 'components/shared/Loading'
-import {Paper} from '@material-ui/core'
+import {Paper, GridList, GridListTile} from '@material-ui/core'
 import {useStyles} from 'components/Pictos/PictoOverview/styles'
-import {fetchPictos} from 'redux-logic/pictos'
+import {PictoData} from 'definitions'
 
-export const PictoOverview = (): JSX.Element => {
+interface Props {
+  pictos: PictoData[]
+}
+
+export const PictoOverview: React.SFC<Props> = ({pictos}): JSX.Element => {
   const classes = useStyles()
-  const dispatch = useDispatch()
-  const pictos = useSelector(({pictoState: {pictos}}: StoreState) => pictos)
-  const {isLoading, isSaving} = useSelector(({pictoState: {pictoMeta}}: StoreState) => pictoMeta)
-
-  useEffect(() => {
-    dispatch(fetchPictos())
-  }, [dispatch])
-
-  if (isLoading) {
-    return <Loading message={i18n.t('pictos:loading')} />
-  }
-
-  if (isSaving) {
-    return <Loading message={i18n.t('pictos:saving')} />
-  }
+  console.log(pictos)
 
   return (
     <Paper className={classes.paper}>
-      <PictoGrid pictos={pictos} />
+      <div>
+        {pictos.length > 0 ? (
+          <div className={classes.root}>
+            <GridList cellHeight={160} className={classes.gridList} cols={12}>
+              {pictos.map(picto => (
+                <GridListTile key={picto.id} cols={1}>
+                  <img src={picto.data} alt={picto.title} />
+                </GridListTile>
+              ))}
+            </GridList>
+          </div>
+        ) : (
+          <div>{i18n.t('pictos:notAvailable')}</div>
+        )}
+      </div>
     </Paper>
   )
-}
-
-interface PictoGridProps {
-  pictos: PictoCollection
-}
-const PictoGrid: React.SFC<PictoGridProps> = ({pictos}): JSX.Element => {
-  const pictoArr = Object.keys(pictos)
-    .map(k => pictos[k])
-    .sort((a, b) => a.title.localeCompare(b.title))
-
-  return <div>{pictoArr.length > 1 ? <div>fancy grid</div> : <div>{i18n.t('pictos:notAvailable')}</div>}</div>
 }
