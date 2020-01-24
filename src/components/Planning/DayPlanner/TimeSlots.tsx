@@ -3,6 +3,7 @@ import i18n from 'i18next'
 import {TimeSlot, TimeSlotCollection} from 'definitions'
 import {TableRow, TableCell, TableContainer, Table, TableBody} from '@material-ui/core'
 import {useStyles} from 'components/Planning/DayPlanner/styles'
+import {PictoLine} from 'components/Planning/DayPlanner/PictoLine'
 
 interface TimeSlotsProps {
   timeslots: TimeSlotCollection
@@ -32,7 +33,7 @@ const Slot: React.SFC<Props> = ({timeslot}): JSX.Element => {
       <TableCell component="th" scope="row" className={classes.timeColumn}>
         {timeslot.timeSlot}
       </TableCell>
-      <TableCell>{timeslot.pictoIds.length > 0 ? <div>pictos</div> : i18n.t('planning:pictos:notAvailable')}</TableCell>
+      <TableCell>{timeslot.pictoIds.length > 0 ? <PictoLine pictoIds={timeslot.pictoIds} /> : i18n.t('planning:pictos:notAvailable')}</TableCell>
     </TableRow>
   )
 }
